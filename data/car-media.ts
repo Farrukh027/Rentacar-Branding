@@ -30,6 +30,10 @@ type ListingMediaSeed = {
   galleryImages: StaticImageSeed[];
 };
 
+function wikimediaImage(fileName: string) {
+  return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(fileName)}`;
+}
+
 const listingProfiles: Record<string, ListingProfile> = {
   "hyundai-elantra": {
     id: "brc-hyundai-elantra-cn7-2021-white",
@@ -156,91 +160,311 @@ const listingProfiles: Record<string, ListingProfile> = {
 
 const listingMediaSeeds: Record<string, ListingMediaSeed> = {
   "hyundai-elantra": {
-    mainImage: { id: "hyundai-elantra-main", caption: "Hyundai Elantra əsas şəkli", position: "center 56%" },
+    mainImage: {
+      id: "hyundai-elantra-main",
+      caption: "Hyundai Elantra əsas şəkil",
+      position: "center 56%",
+      src: wikimediaImage("2021 Hyundai Elantra Limited in Quartz White, front right.jpg")
+    },
     galleryImages: [
-      { id: "hyundai-elantra-gallery-1", caption: "Yan görünüş", position: "center 54%" },
-      { id: "hyundai-elantra-gallery-2", caption: "Ön hissə", position: "center 55%" },
-      { id: "hyundai-elantra-gallery-3", caption: "Salon görünüşü", position: "center 56%" }
+      {
+        id: "hyundai-elantra-gallery-1",
+        caption: "Arxa bucaq",
+        position: "center 54%",
+        src: wikimediaImage("2021 Hyundai Elantra Limited in Quartz White, rear left.jpg")
+      },
+      {
+        id: "hyundai-elantra-gallery-2",
+        caption: "Yan görünüş",
+        position: "center 55%",
+        src: wikimediaImage("Hyundai Elantra CN7.jpg")
+      },
+      {
+        id: "hyundai-elantra-gallery-3",
+        caption: "Ön görünüş",
+        position: "center 56%",
+        src: wikimediaImage("Hyundai Elantra CN7 (cropped).jpg")
+      }
     ]
   },
   "kia-cerato": {
-    mainImage: { id: "kia-cerato-main", caption: "Kia Cerato əsas şəkli", position: "center 56%" },
+    mainImage: {
+      id: "kia-cerato-main",
+      caption: "Kia Cerato əsas şəkil",
+      position: "center 56%",
+      src: wikimediaImage("Kia k3 bd white (1).jpg")
+    },
     galleryImages: [
-      { id: "kia-cerato-gallery-1", caption: "Yan görünüş", position: "center 54%" },
-      { id: "kia-cerato-gallery-2", caption: "Ön hissə", position: "center 55%" },
-      { id: "kia-cerato-gallery-3", caption: "Salon görünüşü", position: "center 56%" }
+      {
+        id: "kia-cerato-gallery-1",
+        caption: "Front görünüş",
+        position: "center 54%",
+        src: wikimediaImage("Kia K3 BD White 1.6 MPi (2).jpg")
+      },
+      {
+        id: "kia-cerato-gallery-2",
+        caption: "Şəhər kadrı",
+        position: "center 55%",
+        src: wikimediaImage("Kia K3 BD 01 South Korea 2018-03-29.jpg")
+      },
+      {
+        id: "kia-cerato-gallery-3",
+        caption: "Arxa bucaq",
+        position: "center 56%",
+        src: wikimediaImage("Kia K3 BD 02 South Korea 2018-03-29.jpg")
+      }
     ]
   },
   "kia-sportage": {
-    mainImage: { id: "kia-sportage-main", caption: "Kia Sportage əsas şəkli", position: "center 58%" },
+    mainImage: {
+      id: "kia-sportage-main",
+      caption: "Kia Sportage əsas şəkil",
+      position: "center 58%",
+      src: wikimediaImage("Kia Sportage NQ5 PE Wolf Grey (1).jpg")
+    },
     galleryImages: [
-      { id: "kia-sportage-gallery-1", caption: "Yan görünüş", position: "center 56%" },
-      { id: "kia-sportage-gallery-2", caption: "Ön hissə", position: "center 57%" },
-      { id: "kia-sportage-gallery-3", caption: "Salon görünüşü", position: "center 58%" }
+      {
+        id: "kia-sportage-gallery-1",
+        caption: "Wolf grey ön tərəf",
+        position: "center 56%",
+        src: wikimediaImage("Kia Sportage NQ5 PE Wolf Grey (4).jpg")
+      },
+      {
+        id: "kia-sportage-gallery-2",
+        caption: "Gravity ön bucaq",
+        position: "center 57%",
+        src: wikimediaImage("Kia Sportage Gravity NQ5 grey (1).jpg")
+      },
+      {
+        id: "kia-sportage-gallery-3",
+        caption: "Gravity arxa bucaq",
+        position: "center 58%",
+        src: wikimediaImage("Kia Sportage Gravity NQ5 grey (2).jpg")
+      }
     ]
   },
   "kia-optima": {
-    mainImage: { id: "kia-optima-main", caption: "Kia Optima əsas şəkli", position: "center 56%" },
+    mainImage: {
+      id: "kia-optima-main",
+      caption: "Kia Optima əsas şəkil",
+      position: "center 56%",
+      src: wikimediaImage("Kia k5 jf black (1).jpg")
+    },
     galleryImages: [
-      { id: "kia-optima-gallery-1", caption: "Yan görünüş", position: "center 54%" },
-      { id: "kia-optima-gallery-2", caption: "Ön hissə", position: "center 55%" },
-      { id: "kia-optima-gallery-3", caption: "Salon görünüşü", position: "center 56%" }
+      {
+        id: "kia-optima-gallery-1",
+        caption: "Qara ön görünüş",
+        position: "center 54%",
+        src: wikimediaImage("Kia k5 jf black (2).jpg")
+      },
+      {
+        id: "kia-optima-gallery-2",
+        caption: "Qara yan görünüş",
+        position: "center 55%",
+        src: wikimediaImage("Kia k5 jf black (3).jpg")
+      },
+      {
+        id: "kia-optima-gallery-3",
+        caption: "FL qara versiya",
+        position: "center 56%",
+        src: wikimediaImage("Kia K5 JF FL black (1).jpg")
+      }
     ]
   },
   "kia-sorento": {
-    mainImage: { id: "kia-sorento-main", caption: "Kia Sorento əsas şəkli", position: "center 58%" },
+    mainImage: {
+      id: "kia-sorento-main",
+      caption: "Kia Sorento əsas şəkil",
+      position: "center 58%",
+      src: wikimediaImage("0 Kia Sorento (MQ) 1.jpg")
+    },
     galleryImages: [
-      { id: "kia-sorento-gallery-1", caption: "Yan görünüş", position: "center 56%" },
-      { id: "kia-sorento-gallery-2", caption: "Ön hissə", position: "center 57%" },
-      { id: "kia-sorento-gallery-3", caption: "Salon görünüşü", position: "center 58%" }
+      {
+        id: "kia-sorento-gallery-1",
+        caption: "MQ4 ön görünüş",
+        position: "center 56%",
+        src: wikimediaImage("0 Kia Sorento (MQ) 2.jpg")
+      },
+      {
+        id: "kia-sorento-gallery-2",
+        caption: "2024 model ön bucaq",
+        position: "center 57%",
+        src: wikimediaImage("2024 Kia Sorento (MQ4) Ditzingen Mobil IMG 9803.jpg")
+      },
+      {
+        id: "kia-sorento-gallery-3",
+        caption: "2024 model arxa bucaq",
+        position: "center 58%",
+        src: wikimediaImage("2024 Kia Sorento (MQ4) Ditzingen Mobil IMG 9809.jpg")
+      }
     ]
   },
   "hyundai-santa-fe": {
-    mainImage: { id: "hyundai-santa-fe-main", caption: "Hyundai Santa Fe əsas şəkli", position: "center 57%" },
+    mainImage: {
+      id: "hyundai-santa-fe-main",
+      caption: "Hyundai Santa Fe əsas şəkil",
+      position: "center 57%",
+      src: wikimediaImage("Hyundai Santa Fe TM Phantom Black (1).jpg")
+    },
     galleryImages: [
-      { id: "hyundai-santa-fe-gallery-1", caption: "Yan görünüş", position: "center 55%" },
-      { id: "hyundai-santa-fe-gallery-2", caption: "Ön hissə", position: "center 56%" },
-      { id: "hyundai-santa-fe-gallery-3", caption: "Salon görünüşü", position: "center 57%" }
+      {
+        id: "hyundai-santa-fe-gallery-1",
+        caption: "Phantom Black ön görünüş",
+        position: "center 55%",
+        src: wikimediaImage("Hyundai Santa Fe TM Phantom Black (2).jpg")
+      },
+      {
+        id: "hyundai-santa-fe-gallery-2",
+        caption: "Phantom Black yan görünüş",
+        position: "center 56%",
+        src: wikimediaImage("Hyundai Santa Fe TM Phantom Black (3).jpg")
+      },
+      {
+        id: "hyundai-santa-fe-gallery-3",
+        caption: "Phantom Black arxa görünüş",
+        position: "center 57%",
+        src: wikimediaImage("Hyundai Santa Fe TM Phantom Black (4).jpg")
+      }
     ]
   },
   "toyota-prado": {
-    mainImage: { id: "toyota-prado-main", caption: "Toyota Prado əsas şəkli", position: "center 56%" },
+    mainImage: {
+      id: "toyota-prado-main",
+      caption: "Toyota Prado əsas şəkil",
+      position: "center 56%",
+      src: wikimediaImage("Toyota Land Cruiser Prado J150 3.0 VX 2023 (1).jpg")
+    },
     galleryImages: [
-      { id: "toyota-prado-gallery-1", caption: "Yan görünüş", position: "center 54%" },
-      { id: "toyota-prado-gallery-2", caption: "Ön hissə", position: "center 55%" },
-      { id: "toyota-prado-gallery-3", caption: "Salon görünüşü", position: "center 56%" }
+      {
+        id: "toyota-prado-gallery-1",
+        caption: "Black Onyx görünüş",
+        position: "center 54%",
+        src: wikimediaImage("Toyota Land Cruiser Prado Black Onyx.jpg")
+      },
+      {
+        id: "toyota-prado-gallery-2",
+        caption: "J150 ön görünüş",
+        position: "center 55%",
+        src: wikimediaImage("2013-2017 Toyota Land Cruiser Prado (front).jpg")
+      },
+      {
+        id: "toyota-prado-gallery-3",
+        caption: "J150 arxa görünüş",
+        position: "center 56%",
+        src: wikimediaImage("2013-2017 Toyota Land Cruiser Prado (rear).jpg")
+      }
     ]
   },
   "bmw-f30": {
-    mainImage: { id: "bmw-f30-main", caption: "BMW F30 əsas şəkli", position: "center 57%" },
+    mainImage: {
+      id: "bmw-f30-main",
+      caption: "BMW F30 əsas şəkil",
+      position: "center 57%",
+      src: wikimediaImage("BMW F30 LCI 320i Luxury Line Alpine White (1).jpg")
+    },
     galleryImages: [
-      { id: "bmw-f30-gallery-1", caption: "Yan görünüş", position: "center 55%" },
-      { id: "bmw-f30-gallery-2", caption: "Ön hissə", position: "center 56%" },
-      { id: "bmw-f30-gallery-3", caption: "Salon görünüşü", position: "center 57%" }
+      {
+        id: "bmw-f30-gallery-1",
+        caption: "Alpine White yan görünüş",
+        position: "center 55%",
+        src: wikimediaImage("BMW F30 LCI 320i Luxury Line Alpine White (7).jpg")
+      },
+      {
+        id: "bmw-f30-gallery-2",
+        caption: "Alpine White ön detal",
+        position: "center 56%",
+        src: wikimediaImage("BMW F30 LCI 320i Luxury Line Alpine White (23).jpg")
+      },
+      {
+        id: "bmw-f30-gallery-3",
+        caption: "Alpine White arxa detal",
+        position: "center 57%",
+        src: wikimediaImage("BMW F30 LCI 320i Luxury Line Alpine White (31).jpg")
+      }
     ]
   },
   "bmw-g30": {
-    mainImage: { id: "bmw-g30-main", caption: "BMW G30 əsas şəkli", position: "center 57%" },
+    mainImage: {
+      id: "bmw-g30-main",
+      caption: "BMW G30 əsas şəkil",
+      position: "center 57%",
+      src: wikimediaImage("BMW G30 530i Black Sapphire Metallic (1).jpg")
+    },
     galleryImages: [
-      { id: "bmw-g30-gallery-1", caption: "Yan görünüş", position: "center 55%" },
-      { id: "bmw-g30-gallery-2", caption: "Ön hissə", position: "center 56%" },
-      { id: "bmw-g30-gallery-3", caption: "Salon görünüşü", position: "center 57%" }
+      {
+        id: "bmw-g30-gallery-1",
+        caption: "Black Sapphire ön görünüş",
+        position: "center 55%",
+        src: wikimediaImage("BMW G30 530i Black Sapphire Metallic (2).jpg")
+      },
+      {
+        id: "bmw-g30-gallery-2",
+        caption: "Black Sapphire yan görünüş",
+        position: "center 56%",
+        src: wikimediaImage("BMW G30 530i Black Sapphire Metallic (3).jpg")
+      },
+      {
+        id: "bmw-g30-gallery-3",
+        caption: "Black Sapphire arxa görünüş",
+        position: "center 57%",
+        src: wikimediaImage("BMW G30 530i Black Sapphire Metallic (4).jpg")
+      }
     ]
   },
   "hyundai-sonata": {
-    mainImage: { id: "hyundai-sonata-main", caption: "Hyundai Sonata əsas şəkli", position: "center 56%" },
+    mainImage: {
+      id: "hyundai-sonata-main",
+      caption: "Hyundai Sonata əsas şəkil",
+      position: "center 56%",
+      src: wikimediaImage("Hyundai Sonata DN8 grey (1).jpg")
+    },
     galleryImages: [
-      { id: "hyundai-sonata-gallery-1", caption: "Yan görünüş", position: "center 54%" },
-      { id: "hyundai-sonata-gallery-2", caption: "Ön hissə", position: "center 55%" },
-      { id: "hyundai-sonata-gallery-3", caption: "Salon görünüşü", position: "center 56%" }
+      {
+        id: "hyundai-sonata-gallery-1",
+        caption: "Boz ön görünüş",
+        position: "center 54%",
+        src: wikimediaImage("Hyundai Sonata DN8 grey (2).jpg")
+      },
+      {
+        id: "hyundai-sonata-gallery-2",
+        caption: "Boz yan görünüş",
+        position: "center 55%",
+        src: wikimediaImage("Hyundai Sonata DN8 grey (3).jpg")
+      },
+      {
+        id: "hyundai-sonata-gallery-3",
+        caption: "Boz arxa görünüş",
+        position: "center 56%",
+        src: wikimediaImage("Hyundai Sonata DN8 grey (4).jpg")
+      }
     ]
   },
   "mercedes-g-class": {
-    mainImage: { id: "mercedes-g-class-main", caption: "Mercedes G-Class əsas şəkli", position: "center 55%" },
+    mainImage: {
+      id: "mercedes-g-class-main",
+      caption: "Mercedes G-Class əsas şəkil",
+      position: "center 55%",
+      src: wikimediaImage("Mercedes-Benz G500 (W463) front.jpg")
+    },
     galleryImages: [
-      { id: "mercedes-g-class-gallery-1", caption: "Yan görünüş", position: "center 53%" },
-      { id: "mercedes-g-class-gallery-2", caption: "Ön hissə", position: "center 54%" },
-      { id: "mercedes-g-class-gallery-3", caption: "Salon görünüşü", position: "center 55%" }
+      {
+        id: "mercedes-g-class-gallery-1",
+        caption: "G500 arxa görünüş",
+        position: "center 53%",
+        src: wikimediaImage("Mercedes-Benz G500 (W463) rear.jpg")
+      },
+      {
+        id: "mercedes-g-class-gallery-2",
+        caption: "G350d ön görünüş",
+        position: "center 54%",
+        src: wikimediaImage("Black Mercedes-Benz G 350d (W463) front.jpg")
+      },
+      {
+        id: "mercedes-g-class-gallery-3",
+        caption: "G350d arxa görünüş",
+        position: "center 55%",
+        src: wikimediaImage("Black Mercedes-Benz G350d (W463) rear.jpg")
+      }
     ]
   }
 };
@@ -263,7 +487,7 @@ function buildFallbackSeed(baseCar: BaseCar): ListingMediaSeed {
   return {
     mainImage: {
       id: `${baseCar.slug}-main`,
-      caption: `${baseCar.name} əsas şəkli`
+      caption: `${baseCar.name} əsas şəkil`
     },
     galleryImages: baseCar.gallery.map((item, index) => ({
       id: `${baseCar.slug}-gallery-${index + 1}`,
