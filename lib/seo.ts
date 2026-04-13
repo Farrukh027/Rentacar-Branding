@@ -25,12 +25,19 @@ export function buildVehicleSchema(car: Car) {
   return {
     "@context": "https://schema.org",
     "@type": "Car",
-    brand: business.shortName,
-    model: car.name,
+    brand: {
+      "@type": "Brand",
+      name: car.brand
+    },
+    model: car.model,
+    name: car.name,
     vehicleTransmission: car.transmission,
     fuelType: car.fuelType,
     numberOfSeats: car.seats,
+    bodyType: car.bodyType,
+    color: car.color,
     productionDate: String(car.year),
+    image: absoluteUrl("/opengraph-image"),
     offers: {
       "@type": "Offer",
       priceCurrency: "AZN",

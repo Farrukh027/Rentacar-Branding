@@ -2,7 +2,6 @@ import { Gauge, Fuel, Settings2, Users } from "lucide-react";
 
 import { CarShowcaseVisual } from "@/components/shared/car-showcase-visual";
 import { Button } from "@/components/ui/button";
-import { getCarMedia } from "@/data/car-media";
 import type { Car } from "@/lib/types";
 import { buildCarReservationMessage, buildWhatsAppLink } from "@/lib/whatsapp";
 
@@ -11,18 +10,18 @@ type CarCardProps = {
 };
 
 export function CarCard({ car }: CarCardProps) {
-  const media = getCarMedia(car.slug);
-
   return (
-    <article className="premium-card group overflow-hidden transition-[transform,box-shadow,border-color] duration-500 hover:-translate-y-1 hover:border-[color:color-mix(in_srgb,var(--color-accent)_34%,transparent)] hover:shadow-[0_26px_60px_color-mix(in_srgb,var(--color-accent)_10%,transparent)]">
+    <article className="premium-card group h-full overflow-hidden transition-[transform,box-shadow,border-color] duration-300 md:hover:-translate-y-1 md:hover:border-[color:color-mix(in_srgb,var(--color-accent)_34%,transparent)] md:hover:shadow-[0_26px_60px_color-mix(in_srgb,var(--color-accent)_10%,transparent)]">
       <div className="relative p-2.5 sm:p-4">
         <CarShowcaseVisual
           title={car.name}
+          label={car.typeLabel}
           accent={car.accent}
           visual={car.visual}
-          label={car.typeLabel}
-          imageSrc={media.cover}
-          imagePosition={media.position}
+          imageSrc={car.mainImage.src}
+          imageAlt={car.mainImage.alt}
+          imagePosition={car.mainImage.position}
+          sizes="(max-width: 640px) 46vw, (max-width: 1280px) 30vw, 22vw"
           className="aspect-[1/1] sm:aspect-[1.3/1]"
         />
         <div className="absolute left-5 top-5 flex flex-wrap gap-1.5 sm:left-8 sm:top-8 sm:gap-2">
@@ -45,7 +44,7 @@ export function CarCard({ car }: CarCardProps) {
             <div className="text-[9px] uppercase tracking-[0.24em] text-[var(--color-accent)] sm:text-[11px]">
               {car.typeLabel}
             </div>
-            <h3 className="mt-1 truncate text-base font-semibold tracking-[-0.03em] text-[var(--color-text)] sm:mt-2 sm:text-2xl">
+            <h3 className="mt-1 text-sm font-semibold leading-5 tracking-[-0.03em] text-[var(--color-text)] sm:mt-2 sm:text-2xl sm:leading-tight">
               {car.name}
             </h3>
           </div>
@@ -66,19 +65,19 @@ export function CarCard({ car }: CarCardProps) {
         <div className="mt-3 grid grid-cols-2 gap-2 text-[11px] text-[var(--color-muted)] sm:mt-5 sm:gap-3 sm:text-sm">
           <div className="flex items-center gap-1.5 rounded-[16px] border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-2.5 py-2.5 sm:gap-2 sm:px-3 sm:py-3">
             <Users className="size-3.5 shrink-0 text-[var(--color-accent)] sm:size-4" />
-            <span className="truncate">{car.seats} yer</span>
+            <span className="leading-4">{car.seats} yer</span>
           </div>
           <div className="flex items-center gap-1.5 rounded-[16px] border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-2.5 py-2.5 sm:gap-2 sm:px-3 sm:py-3">
             <Settings2 className="size-3.5 shrink-0 text-[var(--color-accent)] sm:size-4" />
-            <span className="truncate">{car.transmission}</span>
+            <span className="leading-4">{car.transmission}</span>
           </div>
           <div className="flex items-center gap-1.5 rounded-[16px] border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-2.5 py-2.5 sm:gap-2 sm:px-3 sm:py-3">
             <Fuel className="size-3.5 shrink-0 text-[var(--color-accent)] sm:size-4" />
-            <span className="truncate">{car.fuelType}</span>
+            <span className="leading-4">{car.fuelType}</span>
           </div>
           <div className="flex items-center gap-1.5 rounded-[16px] border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-2.5 py-2.5 sm:gap-2 sm:px-3 sm:py-3">
             <Gauge className="size-3.5 shrink-0 text-[var(--color-accent)] sm:size-4" />
-            <span className="truncate">{car.engine}</span>
+            <span className="leading-4">{car.engine}</span>
           </div>
         </div>
 

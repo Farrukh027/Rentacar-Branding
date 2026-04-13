@@ -9,6 +9,21 @@ import { buildLocalBusinessSchema } from "@/lib/seo";
 
 import "./globals.css";
 
+const themeInitScript = `
+(() => {
+  try {
+    const storageKey = "brandium-theme";
+    const storedTheme = window.localStorage.getItem(storageKey);
+    const theme = storedTheme === "dark" ? "dark" : "light";
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+  } catch {
+    document.documentElement.dataset.theme = "light";
+    document.documentElement.style.colorScheme = "light";
+  }
+})();
+`;
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
@@ -47,6 +62,7 @@ export default function RootLayout({
   return (
     <html lang="az" data-theme="light" suppressHydrationWarning>
       <body>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <Providers>
           <StructuredData data={buildLocalBusinessSchema()} />
           <SiteShell>{children}</SiteShell>

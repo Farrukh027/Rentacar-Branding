@@ -9,7 +9,7 @@ type BookingStripProps = {
 
 export function BookingStrip({ className }: BookingStripProps) {
   return (
-    <Container className={cn("relative z-10 mt-6 sm:mt-10", className)}>
+    <Container className={cn("relative z-10 mt-5 sm:mt-9", className)}>
       <form
         action="/rezervasiya"
         className="premium-card grid grid-cols-2 gap-3 p-3 sm:grid-cols-2 sm:p-5 lg:grid-cols-[1fr_1fr_0.9fr_0.9fr_auto] lg:items-end"
@@ -21,7 +21,7 @@ export function BookingStrip({ className }: BookingStripProps) {
           <input
             name="pickupDate"
             type="date"
-            className="h-11 rounded-[16px] border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-3 outline-none transition-colors focus:border-[var(--color-accent)]/45 sm:h-12 sm:rounded-[18px] sm:px-4"
+            className="h-11 w-full rounded-[16px] border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-3 outline-none transition-colors focus:border-[var(--color-accent)]/45 sm:h-12 sm:rounded-[18px] sm:px-4"
           />
         </label>
         <label className="grid gap-1.5">
@@ -31,7 +31,7 @@ export function BookingStrip({ className }: BookingStripProps) {
           <select
             name="category"
             defaultValue="Hamısı"
-            className="h-11 rounded-[16px] border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-3 outline-none transition-colors focus:border-[var(--color-accent)]/45 sm:h-12 sm:rounded-[18px] sm:px-4"
+            className="h-11 w-full rounded-[16px] border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-3 outline-none transition-colors focus:border-[var(--color-accent)]/45 sm:h-12 sm:rounded-[18px] sm:px-4"
           >
             {fleetFilterOptions.categories.map((category) => (
               <option key={category} value={category}>

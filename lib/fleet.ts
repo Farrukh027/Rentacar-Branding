@@ -85,7 +85,9 @@ export function filterCars(carList: Car[], filters: FleetFilterState) {
         return true;
       }
 
-      return `${car.name} ${car.typeLabel} ${car.highlight}`.toLowerCase().includes(query);
+      return `${car.name} ${car.brand} ${car.model} ${car.generation ?? ""} ${car.variant ?? ""} ${car.color ?? ""} ${car.typeLabel} ${car.highlight}`
+        .toLowerCase()
+        .includes(query);
     })
     .sort((left, right) => {
       if (filters.sort === "cheap") {

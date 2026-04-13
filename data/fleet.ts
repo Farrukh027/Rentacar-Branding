@@ -1,6 +1,8 @@
-import type { Car } from "@/lib/types";
+import { buildCarListingRecord } from "@/data/car-media";
+import { assertUniqueListingMediaAssignments } from "@/lib/listing-images";
+import type { BaseCar, Car } from "@/lib/types";
 
-export const cars: Car[] = [
+const baseCars: BaseCar[] = [
   {
     slug: "hyundai-elantra", name: "Hyundai Elantra", typeLabel: "Ekonom / Sedan", categories: ["Ekonom", "Sedan"], priceFrom: 49,
     pricing: { daily: "49 AZN / gün", weekly: "329 AZN / həftə", monthly: "890 AZN / ay" }, seats: 5, transmission: "Avtomat", fuelType: "Benzin",
@@ -101,3 +103,7 @@ export const cars: Car[] = [
     gallery: [{ title: "Luxury show", note: "Tədbir üçün fərqli təqdimat", variant: "default" }, { title: "Event night", note: "Qızılı səhnə tonu", variant: "night" }, { title: "Salon lüksü", note: "Daha yüksək seqment hissi", variant: "interior" }]
   }
 ];
+
+export const cars: Car[] = baseCars.map((car) => buildCarListingRecord(car));
+
+assertUniqueListingMediaAssignments(cars);

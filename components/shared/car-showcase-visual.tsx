@@ -8,11 +8,13 @@ type CarShowcaseVisualProps = {
   accent: string;
   visual: CarVisualType;
   label?: string;
+  imageAlt?: string;
   className?: string;
   variant?: "default" | "night" | "interior";
   imageSrc?: string;
   imagePosition?: string;
   priority?: boolean;
+  sizes?: string;
 };
 
 const shapes = {
@@ -30,11 +32,13 @@ export function CarShowcaseVisual({
   accent,
   visual,
   label,
+  imageAlt,
   className,
   variant = "default",
   imageSrc,
   imagePosition = "center center",
-  priority = false
+  priority = false,
+  sizes = "(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
 }: CarShowcaseVisualProps) {
   const gradientId = `car-accent-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
   const backgroundClass =
@@ -55,29 +59,30 @@ export function CarShowcaseVisual({
     return (
       <div
         className={cn(
-          "relative overflow-hidden rounded-[28px] border border-[var(--color-border)] bg-[var(--color-showcase-bg)] transform-gpu transition-[transform,box-shadow,border-color] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:shadow-[0_30px_70px_color-mix(in_srgb,var(--color-accent)_10%,transparent)]",
+          "relative overflow-hidden rounded-[24px] border border-[var(--color-border)] bg-[var(--color-showcase-bg)] transition-[transform,box-shadow,border-color] duration-300 ease-out md:transform-gpu md:rounded-[28px] md:hover:-translate-y-1 md:hover:shadow-[0_22px_42px_color-mix(in_srgb,var(--color-accent)_10%,transparent)]",
           className
         )}
         style={{
-          boxShadow: `var(--color-card-shadow), inset 0 0 0 1px rgba(255,255,255,0.03)`
+          boxShadow: "var(--color-card-shadow), inset 0 0 0 1px rgba(255,255,255,0.03)"
         }}
       >
         <Image
           src={imageSrc}
-          alt={title}
+          alt={imageAlt ?? title}
           fill
           priority={priority}
-          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-          className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.035]"
+          quality={72}
+          sizes={sizes}
+          className="object-cover transition-transform duration-300 ease-out md:duration-500 md:hover:scale-[1.02]"
           style={{ objectPosition: imagePosition }}
         />
         <div className={cn("absolute inset-0", overlayClass)} />
         <div
-          className="absolute -right-10 top-0 h-32 w-32 rounded-full blur-3xl"
+          className="absolute -right-8 top-0 hidden h-24 w-24 rounded-full blur-3xl md:block"
           style={{ backgroundColor: accent, opacity: 0.22 }}
         />
         <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/70 to-transparent" />
-        <div className="absolute inset-x-3 bottom-3 rounded-[20px] border border-white/10 bg-black/22 p-3 backdrop-blur-md sm:inset-x-4 sm:bottom-4 sm:rounded-[22px] sm:p-4">
+        <div className="absolute inset-x-3 bottom-3 rounded-[18px] border border-white/10 bg-black/55 p-3 sm:inset-x-4 sm:bottom-4 sm:rounded-[22px] sm:bg-black/36 sm:p-4 lg:backdrop-blur-sm">
           {label ? (
             <div className="text-[10px] uppercase tracking-[0.22em] text-[var(--color-accent)] sm:text-[11px] sm:tracking-[0.28em]">
               {label}
@@ -94,16 +99,16 @@ export function CarShowcaseVisual({
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-[28px] border border-[var(--color-border)] bg-[var(--color-showcase-bg)] transform-gpu transition-[transform,box-shadow,border-color] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:shadow-[0_30px_70px_color-mix(in_srgb,var(--color-accent)_10%,transparent)]",
+        "relative overflow-hidden rounded-[24px] border border-[var(--color-border)] bg-[var(--color-showcase-bg)] transition-[transform,box-shadow,border-color] duration-300 ease-out md:transform-gpu md:rounded-[28px] md:hover:-translate-y-1 md:hover:shadow-[0_22px_42px_color-mix(in_srgb,var(--color-accent)_10%,transparent)]",
         className
       )}
       style={{
-        boxShadow: `var(--color-card-shadow), inset 0 0 0 1px rgba(255,255,255,0.02)`
+        boxShadow: "var(--color-card-shadow), inset 0 0 0 1px rgba(255,255,255,0.02)"
       }}
     >
       <div className={cn("absolute inset-0 bg-gradient-to-br", backgroundClass)} />
       <div
-        className="absolute -right-10 top-0 h-32 w-32 rounded-full blur-3xl"
+        className="absolute -right-8 top-0 hidden h-24 w-24 rounded-full blur-3xl md:block"
         style={{ backgroundColor: accent, opacity: 0.2 }}
       />
       <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/70 to-transparent" />

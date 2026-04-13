@@ -18,9 +18,9 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
     <button
       type="button"
       onClick={toggleTheme}
-      aria-label={isDark ? "Light moduna kec" : "Dark moduna kec"}
+      aria-label={isDark ? "İşıqlı rejimə keç" : "Qaranlıq rejimə keç"}
       className={cn(
-        "inline-flex h-12 w-12 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface-soft)] text-[var(--color-text)] shadow-[var(--color-card-shadow)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--color-accent)]/45",
+        "inline-flex h-12 w-12 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface-soft)] text-[var(--color-text)] shadow-[var(--color-card-shadow)] transition-[transform,border-color,background-color,color] duration-200 md:hover:-translate-y-0.5 md:hover:border-[var(--color-accent)]/45",
         className
       )}
     >

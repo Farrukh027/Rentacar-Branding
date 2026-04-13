@@ -58,6 +58,7 @@ html {
   scroll-behavior: smooth;
   background: var(--color-bg);
   color-scheme: light;
+  overflow-x: clip;
 }
 
 html[data-theme="dark"] {
@@ -73,6 +74,9 @@ body {
     linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-soft) 42%, var(--color-bg-deep) 100%);
   color: var(--color-text);
   font-family: var(--font-sans);
+  overflow-x: clip;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
   transition:
     background 0.55s cubic-bezier(0.22, 1, 0.36, 1),
     color 0.45s cubic-bezier(0.22, 1, 0.36, 1);
@@ -114,7 +118,7 @@ body::after {
   background-repeat: no-repeat;
   background-position:
     right -48px top 120px;
-  background-size: 320px auto;
+  background-size: 300px auto;
   opacity: 0.075;
   mix-blend-mode: multiply;
   filter: saturate(0.95);
@@ -131,13 +135,11 @@ html[data-theme="dark"] .brand-watermark {
 
 @media (max-width: 640px) {
   .brand-watermark {
-    background-position: right -56px top 92px;
-    background-size: 220px auto;
-    opacity: 0.06;
+    background-image: none;
   }
 
   html[data-theme="dark"] .brand-watermark {
-    opacity: 0.11;
+    opacity: 0;
   }
 }
 
@@ -173,6 +175,7 @@ input,
 select,
 textarea {
   font: inherit;
+  -webkit-tap-highlight-color: transparent;
 }
 
 input,
@@ -181,17 +184,29 @@ textarea {
   color: var(--color-text);
 }
 
-.theme-switching *,
-.theme-switching *::before,
-.theme-switching *::after {
+.theme-switching body,
+.theme-switching .premium-card,
+.theme-switching .glass-panel,
+.theme-switching header,
+.theme-switching footer,
+.theme-switching button,
+.theme-switching a,
+.theme-switching input,
+.theme-switching select,
+.theme-switching textarea,
+.theme-switching summary {
   transition:
-    background-color 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-    color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-    fill 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-    stroke 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-    backdrop-filter 0.5s cubic-bezier(0.22, 1, 0.36, 1) !important;
+    background-color 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    fill 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    stroke 0.28s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--color-accent) 75%, white 25%);
+  outline-offset: 2px;
 }
 
 ::selection {
@@ -225,5 +240,21 @@ textarea {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --color-card-shadow: 0 14px 34px rgba(58, 41, 18, 0.08);
+  }
+
+  html[data-theme="dark"] {
+    --color-card-shadow: 0 16px 36px rgba(0, 0, 0, 0.22);
+  }
+
+  body::before,
+  body::after {
+    opacity: 0.16;
+    background-size: 28px 28px;
   }
 }

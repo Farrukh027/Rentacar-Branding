@@ -4,7 +4,7 @@ import { faqItems } from "@/data/content";
 
 export function FAQSection() {
   return (
-    <section className="py-18 sm:py-20">
+    <section className="section-defer py-18 sm:py-20">
       <SectionHeading
         eyebrow="FAQ"
         title="Rezervasiyadan əvvəl ən çox verilən suallar"

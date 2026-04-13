@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 import { ArrowUpRight, MessageCircleMore } from "lucide-react";
@@ -19,7 +17,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 
 const variantClasses = {
   primary:
-    "border border-[color:color-mix(in_srgb,var(--color-accent)_42%,transparent)] bg-[linear-gradient(180deg,color-mix(in_srgb,var(--color-accent)_18%,transparent),color-mix(in_srgb,var(--color-surface-soft)_92%,transparent))] text-[var(--color-text)] shadow-[0_14px_34px_color-mix(in_srgb,var(--color-accent)_16%,transparent)] hover:border-[var(--color-accent)] hover:shadow-[0_20px_42px_color-mix(in_srgb,var(--color-accent)_20%,transparent)]",
+    "border border-[color:color-mix(in_srgb,var(--color-accent)_42%,transparent)] bg-[linear-gradient(180deg,color-mix(in_srgb,var(--color-accent)_18%,transparent),color-mix(in_srgb,var(--color-surface-soft)_92%,transparent))] text-[var(--color-text)] shadow-[0_10px_24px_color-mix(in_srgb,var(--color-accent)_14%,transparent)] hover:border-[var(--color-accent)]",
   secondary:
     "border border-[var(--color-border)] bg-[var(--color-surface-soft)] text-[var(--color-text)] hover:border-[color:color-mix(in_srgb,var(--color-accent)_35%,transparent)] hover:bg-[color:color-mix(in_srgb,var(--color-surface-soft)_84%,var(--color-accent)_16%)]",
   ghost:
@@ -27,24 +25,17 @@ const variantClasses = {
 } as const;
 
 const sizeClasses = {
-  sm: "h-10 gap-2 px-3.5 text-[13px]",
-  md: "h-12 gap-2.5 px-5 text-sm",
-  lg: "h-14 gap-3 px-6 text-sm"
+  sm: "min-h-10 gap-2 px-3.5 py-2 text-[13px]",
+  md: "min-h-12 gap-2.5 px-5 py-2.5 text-sm",
+  lg: "min-h-14 gap-3 px-6 py-3 text-sm"
 } as const;
 
 function ButtonIcon({ icon }: { icon: ButtonProps["icon"] }) {
   if (icon === "none") return null;
 
-  const iconNode =
-    icon === "whatsapp" ? (
-      <MessageCircleMore className="size-4" />
-    ) : (
-      <ArrowUpRight className="size-4" />
-    );
-
   return (
-    <span className="grid size-7 place-items-center rounded-full border border-[var(--color-border)] bg-[color:color-mix(in_srgb,var(--color-surface-soft)_76%,var(--color-accent)_24%)] text-[var(--color-accent)] transition-transform duration-500 group-hover/button:translate-x-0.5 group-hover/button:-translate-y-0.5">
-      {iconNode}
+    <span className="grid size-7 shrink-0 place-items-center rounded-full border border-[var(--color-border)] bg-[color:color-mix(in_srgb,var(--color-surface-soft)_76%,var(--color-accent)_24%)] text-[var(--color-accent)] transition-transform duration-200 md:group-hover/button:translate-x-0.5 md:group-hover/button:-translate-y-0.5">
+      {icon === "whatsapp" ? <MessageCircleMore className="size-4" /> : <ArrowUpRight className="size-4" />}
     </span>
   );
 }
@@ -54,18 +45,22 @@ function ButtonContent({
   className,
   size = "md",
   variant = "primary",
-  icon = "arrow"
-}: Pick<ButtonProps, "children" | "className" | "size" | "variant" | "icon">) {
+  icon = "arrow",
+  fillWidth = false
+}: Pick<ButtonProps, "children" | "className" | "size" | "variant" | "icon"> & {
+  fillWidth?: boolean;
+}) {
   return (
     <span
       className={cn(
-        "group/button inline-flex max-w-full items-center justify-center rounded-full font-medium tracking-[0.01em] transition-[transform,box-shadow,border-color,background-color,color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5",
+        "group/button inline-flex max-w-full items-center justify-center rounded-full font-medium tracking-[0.01em] transition-[transform,box-shadow,border-color,background-color,color,opacity] duration-200 ease-out disabled:pointer-events-none disabled:opacity-50 md:hover:-translate-y-0.5",
+        fillWidth && "w-full",
         sizeClasses[size],
         variantClasses[variant],
         className
       )}
     >
-      <span className="truncate">{children}</span>
+      <span className="min-w-0 text-balance text-center leading-[1.25] whitespace-normal">{children}</span>
       <ButtonIcon icon={icon} />
     </span>
   );
@@ -82,11 +77,20 @@ export function Button({
   rel,
   ...props
 }: ButtonProps) {
+  const shouldFillWidth = className?.includes("w-full") ?? false;
+  const wrapperClassName = cn("inline-flex max-w-full align-middle", shouldFillWidth && "w-full");
+
   if (href) {
     if (href.startsWith("http")) {
       return (
-        <a href={href} className="inline-flex max-w-full" target={target} rel={rel}>
-          <ButtonContent className={className} size={size} variant={variant} icon={icon}>
+        <a href={href} className={wrapperClassName} target={target} rel={rel}>
+          <ButtonContent
+            className={className}
+            size={size}
+            variant={variant}
+            icon={icon}
+            fillWidth={shouldFillWidth}
+          >
             {children}
           </ButtonContent>
         </a>
@@ -94,8 +98,14 @@ export function Button({
     }
 
     return (
-      <Link href={href} className="inline-flex max-w-full">
-        <ButtonContent className={className} size={size} variant={variant} icon={icon}>
+      <Link href={href} className={wrapperClassName}>
+        <ButtonContent
+          className={className}
+          size={size}
+          variant={variant}
+          icon={icon}
+          fillWidth={shouldFillWidth}
+        >
           {children}
         </ButtonContent>
       </Link>
@@ -103,8 +113,14 @@ export function Button({
   }
 
   return (
-    <button className="inline-flex max-w-full bg-transparent" {...props}>
-      <ButtonContent className={className} size={size} variant={variant} icon={icon}>
+    <button className={cn(wrapperClassName, "bg-transparent")} {...props}>
+      <ButtonContent
+        className={className}
+        size={size}
+        variant={variant}
+        icon={icon}
+        fillWidth={shouldFillWidth}
+      >
         {children}
       </ButtonContent>
     </button>

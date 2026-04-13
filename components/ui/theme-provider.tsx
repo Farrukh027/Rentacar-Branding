@@ -3,6 +3,7 @@
 import {
   createContext,
   type ReactNode,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -21,37 +22,45 @@ type ThemeContextValue = {
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 const storageKey = "brandium-theme";
 
+function getDomTheme(): Theme {
+  if (typeof document === "undefined") {
+    return "light";
+  }
+
+  return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+}
+
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("light");
+  const [theme, setThemeState] = useState<Theme>(getDomTheme);
   const timeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
-    const storedTheme = window.localStorage.getItem(storageKey);
-    const nextTheme = storedTheme === "dark" || storedTheme === "light" ? storedTheme : "light";
-    document.documentElement.dataset.theme = nextTheme;
-    setThemeState(nextTheme);
+    setThemeState(getDomTheme());
+  }, []);
 
+  useEffect(() => {
     return () => {
-      if (timeoutRef.current) {
+      if (timeoutRef.current !== null) {
         window.clearTimeout(timeoutRef.current);
       }
     };
   }, []);
 
-  function setTheme(nextTheme: Theme) {
-    document.body.classList.add("theme-switching");
+  const setTheme = useCallback((nextTheme: Theme) => {
+    document.documentElement.classList.add("theme-switching");
     document.documentElement.dataset.theme = nextTheme;
+    document.documentElement.style.colorScheme = nextTheme;
     window.localStorage.setItem(storageKey, nextTheme);
     setThemeState(nextTheme);
 
-    if (timeoutRef.current) {
+    if (timeoutRef.current !== null) {
       window.clearTimeout(timeoutRef.current);
     }
 
     timeoutRef.current = window.setTimeout(() => {
-      document.body.classList.remove("theme-switching");
-    }, 520);
-  }
+      document.documentElement.classList.remove("theme-switching");
+    }, 320);
+  }, []);
 
   const value = useMemo(
     () => ({
@@ -59,7 +68,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       setTheme,
       toggleTheme: () => setTheme(theme === "light" ? "dark" : "light")
     }),
-    [theme]
+    [theme, setTheme]
   );
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;

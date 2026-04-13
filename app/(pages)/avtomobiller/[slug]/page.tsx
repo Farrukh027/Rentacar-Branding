@@ -8,7 +8,6 @@ import { CarShowcaseVisual } from "@/components/shared/car-showcase-visual";
 import { StructuredData } from "@/components/shared/structured-data";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
-import { getCarMedia } from "@/data/car-media";
 import { cars } from "@/data/fleet";
 import { getCarBySlug, getRelatedCars } from "@/lib/fleet";
 import { buildBreadcrumbSchema, buildVehicleSchema } from "@/lib/seo";
@@ -40,9 +39,12 @@ export async function generateStaticParams() {
 export default async function CarDetailPage({ params }: CarDetailPageProps) {
   const { slug } = await params;
   const car = getCarBySlug(slug);
-  if (!car) notFound();
+
+  if (!car) {
+    notFound();
+  }
+
   const relatedCars = getRelatedCars(car);
-  const media = getCarMedia(car.slug);
 
   return (
     <>
@@ -56,6 +58,7 @@ export default async function CarDetailPage({ params }: CarDetailPageProps) {
           ])
         ]}
       />
+
       <section className="pt-36 sm:pt-40">
         <Container>
           <div className="flex flex-wrap items-center gap-2 text-sm text-[var(--color-muted)]">
@@ -65,6 +68,7 @@ export default async function CarDetailPage({ params }: CarDetailPageProps) {
             <ChevronRight className="size-4" />
             <span className="text-[var(--color-text)]">{car.name}</span>
           </div>
+
           <div className="mt-6 grid gap-8 xl:grid-cols-[1.2fr_360px]">
             <div>
               <div className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-accent)]">
@@ -86,6 +90,15 @@ export default async function CarDetailPage({ params }: CarDetailPageProps) {
                   </span>
                 ))}
               </div>
+              <div className="mt-6 text-sm leading-7 text-[var(--color-muted)]">
+                <span className="font-medium text-[var(--color-text)]">
+                  {car.brand} {car.model}
+                </span>
+                {car.generation ? ` • ${car.generation}` : ""}
+                {car.variant ? ` • ${car.variant}` : ""}
+                {car.color ? ` • ${car.color}` : ""}
+                {car.bodyType ? ` • ${car.bodyType}` : ""}
+              </div>
             </div>
             <StickyInquiryCard car={car} />
           </div>
@@ -97,25 +110,27 @@ export default async function CarDetailPage({ params }: CarDetailPageProps) {
           <div className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
             <CarShowcaseVisual
               title={car.name}
+              label="Əsas şəkil"
               accent={car.accent}
               visual={car.visual}
-              label={car.typeLabel}
-              imageSrc={media.cover}
-              imagePosition={media.position}
+              imageSrc={car.mainImage.src}
+              imageAlt={car.mainImage.alt}
+              imagePosition={car.mainImage.position}
               priority
               className="aspect-[1.45/1] min-h-[320px]"
             />
+
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
-              {car.gallery.slice(1).map((slide) => (
+              {car.galleryImages.slice(0, 2).map((image, index) => (
                 <CarShowcaseVisual
-                  key={slide.title}
-                  title={slide.title}
+                  key={image.id}
+                  title={car.name}
+                  label={image.caption ?? `Qalereya ${index + 1}`}
                   accent={car.accent}
                   visual={car.visual}
-                  label={slide.note}
-                  variant={slide.variant}
-                  imageSrc={media.cover}
-                  imagePosition={media.detailPosition ?? media.position}
+                  imageSrc={image.src}
+                  imageAlt={image.alt}
+                  imagePosition={image.position}
                   className="aspect-[1.2/1] min-h-[150px]"
                 />
               ))}
@@ -143,6 +158,7 @@ export default async function CarDetailPage({ params }: CarDetailPageProps) {
                 ))}
               </div>
             </div>
+
             <div className="premium-card p-6">
               <div className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-accent)]">
                 Texniki blok

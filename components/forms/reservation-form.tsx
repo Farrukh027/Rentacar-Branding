@@ -14,6 +14,12 @@ type ReservationFormProps = {
   initialValues?: Partial<ReservationFormValues>;
 };
 
+const fieldClassName =
+  "h-12 w-full rounded-[18px] border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-4 text-sm outline-none transition-colors focus:border-[var(--color-accent)]/45";
+
+const textareaClassName =
+  "w-full rounded-[18px] border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-4 py-4 text-sm outline-none transition-colors focus:border-[var(--color-accent)]/45";
+
 const defaultValues: ReservationFormValues = {
   fullName: "",
   phone: "",
@@ -47,10 +53,12 @@ export function ReservationForm({ initialValues }: ReservationFormProps) {
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const result = validateReservationForm(values);
+
     if (!result.isValid) {
       setErrors(result.errors);
       return;
     }
+
     setStatus("redirecting");
     window.location.href = buildWhatsAppLink(buildReservationMessage(values));
   }
@@ -65,7 +73,7 @@ export function ReservationForm({ initialValues }: ReservationFormProps) {
             <input
               value={values.fullName}
               onChange={(event) => updateValue("fullName", event.target.value)}
-              className="h-12 rounded-[18px] border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-4 outline-none transition-colors focus:border-[var(--color-accent)]/45"
+              className={fieldClassName}
               placeholder="Ad və soyad"
             />
           }
@@ -77,7 +85,7 @@ export function ReservationForm({ initialValues }: ReservationFormProps) {
             <input
               value={values.phone}
               onChange={(event) => updateValue("phone", event.target.value)}
-              className="h-12 rounded-[18px] border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-4 outline-none transition-colors focus:border-[var(--color-accent)]/45"
+              className={fieldClassName}
               placeholder="+994"
             />
           }
@@ -89,7 +97,7 @@ export function ReservationForm({ initialValues }: ReservationFormProps) {
             <input
               value={values.whatsapp}
               onChange={(event) => updateValue("whatsapp", event.target.value)}
-              className="h-12 rounded-[18px] border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-4 outline-none transition-colors focus:border-[var(--color-accent)]/45"
+              className={fieldClassName}
               placeholder="+994"
             />
           }
@@ -101,7 +109,7 @@ export function ReservationForm({ initialValues }: ReservationFormProps) {
             <select
               value={values.selectedCar}
               onChange={(event) => updateValue("selectedCar", event.target.value)}
-              className="h-12 rounded-[18px] border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-4 outline-none transition-colors focus:border-[var(--color-accent)]/45"
+              className={fieldClassName}
             >
               <option value="">Avtomobil seçin</option>
               {cars.map((car) => (
@@ -120,7 +128,7 @@ export function ReservationForm({ initialValues }: ReservationFormProps) {
               type="date"
               value={values.pickupDate}
               onChange={(event) => updateValue("pickupDate", event.target.value)}
-              className="h-12 rounded-[18px] border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-4 outline-none transition-colors focus:border-[var(--color-accent)]/45"
+              className={fieldClassName}
             />
           }
         />
@@ -132,7 +140,7 @@ export function ReservationForm({ initialValues }: ReservationFormProps) {
               type="time"
               value={values.pickupTime}
               onChange={(event) => updateValue("pickupTime", event.target.value)}
-              className="h-12 rounded-[18px] border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-4 outline-none transition-colors focus:border-[var(--color-accent)]/45"
+              className={fieldClassName}
             />
           }
         />
@@ -144,7 +152,7 @@ export function ReservationForm({ initialValues }: ReservationFormProps) {
               type="date"
               value={values.returnDate}
               onChange={(event) => updateValue("returnDate", event.target.value)}
-              className="h-12 rounded-[18px] border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-4 outline-none transition-colors focus:border-[var(--color-accent)]/45"
+              className={fieldClassName}
             />
           }
         />
@@ -156,11 +164,12 @@ export function ReservationForm({ initialValues }: ReservationFormProps) {
               type="time"
               value={values.returnTime}
               onChange={(event) => updateValue("returnTime", event.target.value)}
-              className="h-12 rounded-[18px] border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-4 outline-none transition-colors focus:border-[var(--color-accent)]/45"
+              className={fieldClassName}
             />
           }
         />
       </div>
+
       <div className="mt-4 grid gap-4">
         <Field
           label="Götürülmə yeri"
@@ -169,20 +178,22 @@ export function ReservationForm({ initialValues }: ReservationFormProps) {
             <input
               value={values.pickupLocation}
               onChange={(event) => updateValue("pickupLocation", event.target.value)}
-              className="h-12 rounded-[18px] border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-4 outline-none transition-colors focus:border-[var(--color-accent)]/45"
+              className={fieldClassName}
               placeholder="Təhvil nöqtəsi"
             />
           }
         />
+
         <label className="flex items-center gap-3 rounded-[18px] border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-4 py-4 text-sm text-[var(--color-text)]">
           <input
             type="checkbox"
             checked={values.deliveryRequested}
             onChange={(event) => updateValue("deliveryRequested", event.target.checked)}
-            className="size-4 accent-[var(--color-accent)]"
+            className="size-4 shrink-0 accent-[var(--color-accent)]"
           />
-          Ünvana çatdırılma istəyirəm
+          <span className="leading-6">Ünvana çatdırılma istəyirəm</span>
         </label>
+
         <Field
           label="Xüsusi qeyd"
           error={errors.note}
@@ -191,17 +202,18 @@ export function ReservationForm({ initialValues }: ReservationFormProps) {
               value={values.note}
               onChange={(event) => updateValue("note", event.target.value)}
               rows={5}
-              className="rounded-[18px] border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-4 py-4 outline-none transition-colors focus:border-[var(--color-accent)]/45"
+              className={textareaClassName}
               placeholder="Uşaq oturacağı, toy sifarişi, aeroport təhvil və s."
             />
           }
         />
       </div>
+
       <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm text-[var(--color-muted)]">
+        <p className="text-sm leading-6 text-[var(--color-muted)]">
           Göndərildikdən sonra WhatsApp-a yönləndiriləcəksiniz.
         </p>
-        <Button type="submit" disabled={status === "redirecting"} className="justify-center">
+        <Button type="submit" disabled={status === "redirecting"} className="w-full justify-center sm:w-auto">
           {status === "redirecting" ? "WhatsApp açılır..." : "Rezervasiyanı göndər"}
         </Button>
       </div>
@@ -214,7 +226,9 @@ type FieldProps = { label: string; error?: string; input: ReactNode };
 function Field({ label, error, input }: FieldProps) {
   return (
     <label className="grid gap-2">
-      <span className="text-xs uppercase tracking-[0.24em] text-[var(--color-muted)]">{label}</span>
+      <span className="text-[11px] uppercase tracking-[0.2em] text-[var(--color-muted)] sm:text-xs sm:tracking-[0.24em]">
+        {label}
+      </span>
       {input}
       {error ? <span className="text-sm text-[#d86c5c]">{error}</span> : null}
     </label>

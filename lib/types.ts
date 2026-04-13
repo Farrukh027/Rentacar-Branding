@@ -82,7 +82,32 @@ export type CarGallerySlide = {
   variant: "default" | "night" | "interior";
 };
 
-export type Car = {
+export type CarImageRole = "main" | "gallery";
+export type CarImageSourceType = "generated" | "upload";
+
+export type CarImageAsset = {
+  id: string;
+  role: CarImageRole;
+  sourceType: CarImageSourceType;
+  src?: string;
+  fileName: string;
+  storagePath: string;
+  alt: string;
+  order: number;
+  verified: boolean;
+  listingId: string;
+  brand: string;
+  model: string;
+  generation?: string;
+  variant?: string;
+  bodyType?: string;
+  color?: string;
+  year: number;
+  position?: string;
+  caption?: string;
+};
+
+export type BaseCar = {
   slug: string;
   name: string;
   typeLabel: string;
@@ -113,6 +138,28 @@ export type Car = {
   topPick?: boolean;
   features: string[];
   gallery: CarGallerySlide[];
+};
+
+export type Car = BaseCar & {
+  id: string;
+  brand: string;
+  model: string;
+  generation?: string;
+  variant?: string;
+  color?: string;
+  bodyType?: string;
+  category: string;
+  imageAltText: string;
+  mainImage: CarImageAsset;
+  galleryImages: CarImageAsset[];
+};
+
+export type ListingMediaValidationResult = {
+  isValid: boolean;
+  errors: string[];
+  warnings: string[];
+  mainImage: CarImageAsset;
+  galleryImages: CarImageAsset[];
 };
 
 export type FleetSort = "cheap" | "expensive" | "popular";

@@ -20,7 +20,7 @@ export function SectionHeading({
   className
 }: SectionHeadingProps) {
   return (
-    <Container className={cn("mb-6 sm:mb-14", className)}>
+    <Container className={cn("mb-6 sm:mb-12", className)}>
       <div className="flex flex-col gap-4 sm:gap-6 lg:flex-row lg:items-end lg:justify-between">
         <Reveal className="max-w-3xl">
           {eyebrow ? (
@@ -28,16 +28,16 @@ export function SectionHeading({
               {eyebrow}
             </div>
           ) : null}
-          <h2 className="text-balance font-display text-[2rem] leading-[0.94] tracking-[-0.04em] text-[var(--color-text)] sm:text-[3rem]">
+          <h2 className="text-balance font-display text-[1.8rem] leading-[0.96] tracking-[-0.04em] text-[var(--color-text)] sm:text-[3rem]">
             {title}
           </h2>
           {description ? (
-            <p className="mt-3 hidden max-w-2xl text-base leading-7 text-[var(--color-muted)] sm:block sm:mt-4">
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--color-muted)] sm:mt-4 sm:text-base sm:leading-7">
               {description}
             </p>
           ) : null}
         </Reveal>
-        {action ? <Reveal delay={0.08}>{action}</Reveal> : null}
+        {action ? <Reveal delay={0.08} className="w-full sm:w-auto">{action}</Reveal> : null}
       </div>
     </Container>
   );

@@ -9,9 +9,9 @@ import { buildWhatsAppLink } from "@/lib/whatsapp";
 
 export function Footer() {
   return (
-    <footer className="border-t border-[var(--color-border)] bg-[var(--color-surface-soft)] py-16 sm:py-20 backdrop-blur-xl">
+    <footer className="border-t border-[var(--color-border)] bg-[var(--color-surface-soft)] py-16 sm:py-20">
       <Container>
-        <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr_0.8fr_1fr]">
+        <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr_0.8fr_1fr]">
           <div>
             <BrandMark />
             <p className="mt-5 max-w-sm text-sm leading-7 text-[var(--color-muted)]">
@@ -25,6 +25,7 @@ export function Footer() {
                 )}
                 icon="whatsapp"
                 size="sm"
+                className="w-full justify-center sm:w-auto"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -56,7 +57,7 @@ export function Footer() {
             </div>
             <div className="mt-5 space-y-3">
               {business.coreServices.slice(0, 6).map((service) => (
-                <p key={service} className="text-sm text-[var(--color-text)]">
+                <p key={service} className="text-sm leading-6 text-[var(--color-text)]">
                   {service}
                 </p>
               ))}

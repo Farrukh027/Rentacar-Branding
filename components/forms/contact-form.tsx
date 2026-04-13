@@ -8,6 +8,12 @@ import type { ContactFormValues } from "@/lib/types";
 import { validateContactForm } from "@/lib/validation";
 import { buildContactMessage, buildWhatsAppLink } from "@/lib/whatsapp";
 
+const fieldClassName =
+  "h-12 w-full rounded-[18px] border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-4 text-sm outline-none transition-colors focus:border-[var(--color-accent)]/45";
+
+const textareaClassName =
+  "w-full rounded-[18px] border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-4 py-4 text-sm outline-none transition-colors focus:border-[var(--color-accent)]/45";
+
 const defaultValues: ContactFormValues = {
   fullName: "",
   phone: "",
@@ -28,10 +34,12 @@ export function ContactForm() {
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const result = validateContactForm(values);
+
     if (!result.isValid) {
       setErrors(result.errors);
       return;
     }
+
     window.location.href = buildWhatsAppLink(buildContactMessage(values));
   }
 
@@ -45,7 +53,7 @@ export function ContactForm() {
             <input
               value={values.fullName}
               onChange={(event) => updateValue("fullName", event.target.value)}
-              className="h-12 rounded-[18px] border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-4 outline-none transition-colors focus:border-[var(--color-accent)]/45"
+              className={fieldClassName}
               placeholder="Ad və soyad"
             />
           }
@@ -57,12 +65,13 @@ export function ContactForm() {
             <input
               value={values.phone}
               onChange={(event) => updateValue("phone", event.target.value)}
-              className="h-12 rounded-[18px] border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-4 outline-none transition-colors focus:border-[var(--color-accent)]/45"
+              className={fieldClassName}
               placeholder="+994"
             />
           }
         />
       </div>
+
       <div className="mt-4 grid gap-4">
         <ContactField
           label="WhatsApp nömrəsi (opsional)"
@@ -71,7 +80,7 @@ export function ContactForm() {
             <input
               value={values.whatsapp}
               onChange={(event) => updateValue("whatsapp", event.target.value)}
-              className="h-12 rounded-[18px] border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-4 outline-none transition-colors focus:border-[var(--color-accent)]/45"
+              className={fieldClassName}
               placeholder="+994"
             />
           }
@@ -83,7 +92,7 @@ export function ContactForm() {
             <input
               value={values.subject}
               onChange={(event) => updateValue("subject", event.target.value)}
-              className="h-12 rounded-[18px] border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-4 outline-none transition-colors focus:border-[var(--color-accent)]/45"
+              className={fieldClassName}
               placeholder="Gündəlik icarə, toy maşını, VIP transfer..."
             />
           }
@@ -96,14 +105,15 @@ export function ContactForm() {
               value={values.note}
               onChange={(event) => updateValue("note", event.target.value)}
               rows={5}
-              className="rounded-[18px] border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-4 py-4 outline-none transition-colors focus:border-[var(--color-accent)]/45"
+              className={textareaClassName}
               placeholder="Tarix, model və ya xidmət ehtiyacınızı qısa qeyd edin."
             />
           }
         />
       </div>
+
       <div className="mt-6">
-        <Button type="submit" icon="whatsapp">
+        <Button type="submit" icon="whatsapp" className="w-full justify-center sm:w-auto">
           WhatsApp ilə göndər
         </Button>
       </div>
@@ -116,7 +126,9 @@ type ContactFieldProps = { label: string; error?: string; input: ReactNode };
 function ContactField({ label, error, input }: ContactFieldProps) {
   return (
     <label className="grid gap-2">
-      <span className="text-xs uppercase tracking-[0.24em] text-[var(--color-muted)]">{label}</span>
+      <span className="text-[11px] uppercase tracking-[0.2em] text-[var(--color-muted)] sm:text-xs sm:tracking-[0.24em]">
+        {label}
+      </span>
       {input}
       {error ? <span className="text-sm text-[#d86c5c]">{error}</span> : null}
     </label>

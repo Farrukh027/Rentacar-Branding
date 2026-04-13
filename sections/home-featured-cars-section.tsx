@@ -1,13 +1,13 @@
-import { cars } from "@/data/fleet";
 import { CarCard } from "@/components/fleet/car-card";
 import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { cars } from "@/data/fleet";
 
 export function HomeFeaturedCarsSection() {
   const featured = cars.slice(0, 6);
 
   return (
-    <section className="py-14 sm:py-20">
+    <section className="section-defer py-14 sm:py-20">
       <SectionHeading
         eyebrow="Elanlar"
         title="Populyar avtomobillər"
@@ -18,7 +18,7 @@ export function HomeFeaturedCarsSection() {
           </Button>
         }
       />
-      <div className="site-container grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-3 xl:gap-5">
+      <div className="site-container grid grid-cols-2 gap-2.5 sm:gap-4 lg:grid-cols-3 xl:gap-5">
         {featured.map((car) => (
           <CarCard key={car.slug} car={car} />
         ))}

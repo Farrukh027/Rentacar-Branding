@@ -6,7 +6,6 @@ import { PageHero } from "@/components/shared/page-hero";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { business } from "@/data/business";
-import { getCarMedia } from "@/data/car-media";
 import { reservationNotes, rentalRules } from "@/data/content";
 import { cars } from "@/data/fleet";
 import { createPageMetadata } from "@/lib/utils";
@@ -30,7 +29,6 @@ export default async function ReservationPage({ searchParams }: ReservationPageP
   const params = await searchParams;
   const selectedSlug = getFirstValue(params.car);
   const selectedCar = cars.find((car) => car.slug === selectedSlug);
-  const selectedMedia = selectedCar ? getCarMedia(selectedCar.slug) : null;
 
   return (
     <>
@@ -92,8 +90,9 @@ export default async function ReservationPage({ searchParams }: ReservationPageP
                 label={selectedCar?.typeLabel ?? "Premium rent-a-car təcrübəsi"}
                 accent={selectedCar?.accent ?? "#d4b275"}
                 visual={selectedCar?.visual ?? "premium"}
-                imageSrc={selectedMedia?.cover}
-                imagePosition={selectedMedia?.position}
+                imageSrc={selectedCar?.mainImage.src}
+                imageAlt={selectedCar?.mainImage.alt}
+                imagePosition={selectedCar?.mainImage.position}
                 className="min-h-[320px]"
               />
 
@@ -126,8 +125,7 @@ export default async function ReservationPage({ searchParams }: ReservationPageP
                       Birbaşa əlaqə
                     </div>
                     <p className="mt-3 text-sm leading-7 text-[var(--color-muted)]">
-                      Formanı doldurmadan da yaza bilərsiniz. Xüsusən toy maşını, VIP transfer və ya
-                      çoxlu avtomobil sorğuları üçün birbaşa WhatsApp daha sürətli olur.
+                      Formanı doldurmadan da yaza bilərsiniz. Xüsusən toy maşını, VIP transfer və ya çoxlu avtomobil sorğuları üçün birbaşa WhatsApp daha sürətli olur.
                     </p>
                     <div className="mt-5 flex flex-wrap gap-3">
                       <Button
