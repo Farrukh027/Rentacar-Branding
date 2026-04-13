@@ -1,5 +1,10 @@
 import type { BaseCar, Car } from "@/lib/types";
-import { createListingImageAsset, sanitizeListingMedia } from "@/lib/listing-images";
+import {
+  buildListingFileName,
+  buildListingStorageDirectory,
+  createListingImageAsset,
+  sanitizeListingMedia
+} from "@/lib/listing-images";
 
 type ListingProfile = {
   id: string;
@@ -267,6 +272,39 @@ function buildFallbackSeed(baseCar: BaseCar): ListingMediaSeed {
   };
 }
 
+function hydrateListingMediaSeed(
+  listingIdentity: {
+    id: string;
+    slug: string;
+    brand: string;
+    model: string;
+    generation?: string;
+    variant?: string;
+    bodyType?: string;
+    color?: string;
+    year: number;
+    imageAltText: string;
+  },
+  mediaSeed: ListingMediaSeed
+): ListingMediaSeed {
+  const directory = buildListingStorageDirectory(listingIdentity);
+
+  return {
+    mainImage: {
+      ...mediaSeed.mainImage,
+      src:
+        mediaSeed.mainImage.src ??
+        `${directory}/${buildListingFileName(listingIdentity, "main", 0, "svg")}`
+    },
+    galleryImages: mediaSeed.galleryImages.map((image, index) => ({
+      ...image,
+      src:
+        image.src ??
+        `${directory}/${buildListingFileName(listingIdentity, "gallery", index + 1, "svg")}`
+    }))
+  };
+}
+
 export function getListingProfile(slug: string) {
   return listingProfiles[slug];
 }
@@ -277,7 +315,7 @@ export function getListingMediaSeed(slug: string) {
 
 export function buildCarListingRecord(baseCar: BaseCar): Car {
   const profile = getListingProfile(baseCar.slug) ?? buildFallbackProfile(baseCar);
-  const mediaSeed = getListingMediaSeed(baseCar.slug) ?? buildFallbackSeed(baseCar);
+  const initialMediaSeed = getListingMediaSeed(baseCar.slug) ?? buildFallbackSeed(baseCar);
 
   const listingIdentity = {
     id: profile.id,
@@ -291,6 +329,8 @@ export function buildCarListingRecord(baseCar: BaseCar): Car {
     year: baseCar.year,
     imageAltText: profile.imageAltText
   };
+
+  const mediaSeed = hydrateListingMediaSeed(listingIdentity, initialMediaSeed);
 
   const mainImage = createListingImageAsset(listingIdentity, {
     id: mediaSeed.mainImage.id,

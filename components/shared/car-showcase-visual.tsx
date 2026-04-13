@@ -41,6 +41,7 @@ export function CarShowcaseVisual({
   sizes = "(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
 }: CarShowcaseVisualProps) {
   const gradientId = `car-accent-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+  const isVectorImage = imageSrc?.endsWith(".svg") ?? false;
   const backgroundClass =
     variant === "interior"
       ? "from-white/[0.08] via-white/[0.03] to-transparent"
@@ -72,6 +73,7 @@ export function CarShowcaseVisual({
           fill
           priority={priority}
           quality={72}
+          unoptimized={isVectorImage}
           sizes={sizes}
           className="object-cover transition-transform duration-300 ease-out md:duration-500 md:hover:scale-[1.02]"
           style={{ objectPosition: imagePosition }}

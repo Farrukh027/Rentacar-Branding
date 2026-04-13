@@ -32,12 +32,23 @@ export function buildListingStorageDirectory(listing: ListingIdentity) {
   return `/listings/${slugifySegment(listing.brand)}/${slugifySegment(listing.model)}/${slugifySegment(listing.id)}`;
 }
 
+function getListingColorSegment(listing: ListingIdentity) {
+  const idSegments = slugifySegment(listing.id).split("-");
+  const colorFromId = idSegments[idSegments.length - 1];
+
+  if (colorFromId && /^[a-z0-9]+$/.test(colorFromId) && Number.isNaN(Number(colorFromId))) {
+    return colorFromId;
+  }
+
+  return listing.color ? slugifySegment(listing.color) : undefined;
+}
+
 export function buildListingFileStem(listing: ListingIdentity) {
   return [
     slugifySegment(listing.brand),
     slugifySegment(listing.model),
     listing.year,
-    listing.color ? slugifySegment(listing.color) : undefined
+    getListingColorSegment(listing)
   ]
     .filter(Boolean)
     .join("-");
@@ -107,63 +118,67 @@ export function validateListingImageAsset(listing: ListingIdentity, asset: CarIm
   const expectedStem = buildListingFileStem(listing);
 
   if (asset.listingId !== listing.id) {
-    errors.push("Şəkil başqa listing-ə bağlıdır.");
+    errors.push("Sekil basqa listing-e baglidir.");
   }
 
   if (slugifySegment(asset.brand) !== slugifySegment(listing.brand)) {
-    errors.push("Şəkildəki brend listing ilə uyğun deyil.");
+    errors.push("Sekildeki brend listing ile uygun deyil.");
   }
 
   if (slugifySegment(asset.model) !== slugifySegment(listing.model)) {
-    errors.push("Şəkildəki model listing ilə uyğun deyil.");
+    errors.push("Sekildeki model listing ile uygun deyil.");
   }
 
   if (
     (asset.generation || listing.generation) &&
     slugifySegment(asset.generation ?? "") !== slugifySegment(listing.generation ?? "")
   ) {
-    errors.push("Şəkildəki nəsil/generasiya listing ilə uyğun deyil.");
+    errors.push("Sekildeki generasiya listing ile uygun deyil.");
   }
 
   if (
     (asset.variant || listing.variant) &&
     slugifySegment(asset.variant ?? "") !== slugifySegment(listing.variant ?? "")
   ) {
-    errors.push("Şəkildəki versiya listing ilə uyğun deyil.");
+    errors.push("Sekildeki versiya listing ile uygun deyil.");
   }
 
   if (
     (asset.bodyType || listing.bodyType) &&
     slugifySegment(asset.bodyType ?? "") !== slugifySegment(listing.bodyType ?? "")
   ) {
-    errors.push("Şəkildəki кузов tipi listing ilə uyğun deyil.");
+    errors.push("Sekildeki kuzov tipi listing ile uygun deyil.");
   }
 
   if (
     (asset.color || listing.color) &&
     slugifySegment(asset.color ?? "") !== slugifySegment(listing.color ?? "")
   ) {
-    errors.push("Şəkildəki rəng listing ilə uyğun deyil.");
+    errors.push("Sekildeki reng listing ile uygun deyil.");
   }
 
   if (asset.year !== listing.year) {
-    errors.push("Şəkildəki il məlumatı listing ilə uyğun deyil.");
+    errors.push("Sekildeki il listing ile uygun deyil.");
   }
 
   if (!asset.storagePath.startsWith(expectedDirectory)) {
-    errors.push("Şəkil listing üçün ayrılmış qovluqda deyil.");
+    errors.push("Sekil listing ucun ayrilan qovluqda deyil.");
   }
 
   if (!asset.fileName.startsWith(expectedStem)) {
-    errors.push("Şəkil fayl adı listing standartına uyğun deyil.");
+    errors.push("Sekil fayl adi listing standartina uygun deyil.");
   }
 
   if (asset.sourceType === "upload" && !isSupportedImageSource(asset.src)) {
-    errors.push("Şəkil yolu qırıqdır və ya dəstəklənməyən formatdadır.");
+    errors.push("Sekil yolu qiriqdir ve ya desteklenmeyen formatdadir.");
+  }
+
+  if (asset.src?.startsWith("/") && asset.src !== asset.storagePath) {
+    errors.push("Sekil yolu listing fayl yolu ile uygun deyil.");
   }
 
   if (!asset.verified) {
-    warnings.push("Şəkil admin tərəfindən hələ təsdiqlənməyib.");
+    warnings.push("Sekil hele admin terefinden tesdiqlenmeyib.");
   }
 
   return {
@@ -213,7 +228,7 @@ export function sanitizeListingMedia(
         role: "main",
         sourceType: "generated",
         order: 0,
-        caption: "Əsas şəkil",
+        caption: "Esas sekil",
         verified: true
       });
 
@@ -225,7 +240,7 @@ export function sanitizeListingMedia(
     const identityKey = `${asset.fileName}|${asset.src ?? ""}`;
 
     if (seen.has(identityKey)) {
-      warnings.push(`Dublikat şəkil silindi: ${asset.fileName}`);
+      warnings.push(`Dublikat sekil silindi: ${asset.fileName}`);
       continue;
     }
 
@@ -268,27 +283,29 @@ export function assertUniqueListingMediaAssignments(cars: Car[]) {
   for (const car of cars) {
     const media = [car.mainImage, ...car.galleryImages];
 
-    if (!car.mainImage) {
-      throw new Error(`Listing üçün əsas şəkil tapılmadı: ${car.slug}`);
+    if (!car.mainImage || !car.mainImage.src || !isSupportedImageSource(car.mainImage.src)) {
+      throw new Error(`Listing ucun esas sekil tapilmadi: ${car.slug}`);
     }
 
     for (const asset of media) {
       if (asset.listingId !== car.id) {
-        throw new Error(`Şəkil yanlış listing-ə bağlanıb: ${car.slug} -> ${asset.fileName}`);
+        throw new Error(`Sekil yanlis listing-e baglanib: ${car.slug} -> ${asset.fileName}`);
+      }
+
+      if (asset.src?.startsWith("/") && asset.src !== asset.storagePath) {
+        throw new Error(`Sekil yolu listing storage standartina uygun deyil: ${asset.src}`);
       }
 
       const existingStorageOwner = usedStoragePaths.get(asset.storagePath);
       if (existingStorageOwner && existingStorageOwner !== car.id) {
-        throw new Error(
-          `Eyni storage path iki listing-də istifadə olunur: ${asset.storagePath}`
-        );
+        throw new Error(`Eyni storage path iki listing-de istifade olunur: ${asset.storagePath}`);
       }
       usedStoragePaths.set(asset.storagePath, car.id);
 
       if (asset.src) {
         const existingSourceOwner = usedUploadedSources.get(asset.src);
         if (existingSourceOwner && existingSourceOwner !== car.id) {
-          throw new Error(`Eyni upload iki fərqli listing-ə bağlanıb: ${asset.src}`);
+          throw new Error(`Eyni upload iki ferqli listing-e baglanib: ${asset.src}`);
         }
         usedUploadedSources.set(asset.src, car.id);
       }
