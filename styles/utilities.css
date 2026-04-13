@@ -1,0 +1,43 @@
+@utility text-balance {
+  text-wrap: balance;
+}
+
+@utility site-container {
+  @apply mx-auto w-full max-w-[1360px] px-4 sm:px-6 lg:px-8;
+}
+
+@utility glass-panel {
+  background: var(--color-surface-soft);
+  backdrop-filter: blur(18px);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--color-card-shadow);
+}
+
+@utility premium-card {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: var(--color-card-shadow);
+  @apply rounded-[28px];
+}
+
+.link-line {
+  position: relative;
+}
+
+.link-line::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.35rem;
+  height: 1px;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: right;
+  background: var(--color-accent);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.link-line:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}

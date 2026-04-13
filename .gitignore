@@ -1,0 +1,11 @@
+.next/
+node_modules/
+.netlify/
+.start.out.log
+.start.err.log
+*.log
+*.tmp
+.env
+.env.*
+.DS_Store
+Thumbs.db
