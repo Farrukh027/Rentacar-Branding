@@ -11,7 +11,7 @@ type CarCardProps = {
 
 export function CarCard({ car }: CarCardProps) {
   return (
-    <article className="premium-card group h-full overflow-hidden transition-[transform,box-shadow,border-color] duration-300 md:hover:-translate-y-1 md:hover:border-[color:color-mix(in_srgb,var(--color-accent)_34%,transparent)] md:hover:shadow-[0_26px_60px_color-mix(in_srgb,var(--color-accent)_10%,transparent)]">
+    <article className="premium-card group flex h-full flex-col overflow-hidden transition-[transform,box-shadow,border-color] duration-300 md:hover:-translate-y-1 md:hover:border-[color:color-mix(in_srgb,var(--color-accent)_34%,transparent)] md:hover:shadow-[0_26px_60px_color-mix(in_srgb,var(--color-accent)_10%,transparent)]">
       <div className="relative p-2.5 sm:p-4">
         <CarShowcaseVisual
           title={car.name}
@@ -33,13 +33,13 @@ export function CarCard({ car }: CarCardProps) {
         </div>
       </div>
 
-      <div className="px-3 pb-3 sm:px-5 sm:pb-5">
-        <div className="flex items-start justify-between gap-2 sm:gap-4">
+      <div className="flex flex-1 flex-col px-3 pb-3 sm:px-5 sm:pb-5">
+        <div className="flex min-h-[3.75rem] items-start justify-between gap-2 sm:min-h-[5.5rem] sm:gap-4">
           <div className="min-w-0">
             <div className="text-[9px] uppercase tracking-[0.24em] text-[var(--color-accent)] sm:text-[11px]">
               {car.typeLabel}
             </div>
-            <h3 className="mt-1 text-sm font-semibold leading-5 tracking-[-0.03em] text-[var(--color-text)] sm:mt-2 sm:text-2xl sm:leading-tight">
+            <h3 className="mt-1 min-h-[2.5rem] text-sm font-semibold leading-5 tracking-[-0.03em] text-[var(--color-text)] [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2] sm:mt-2 sm:min-h-[4rem] sm:text-2xl sm:leading-tight">
               {car.name}
             </h3>
           </div>
@@ -53,7 +53,7 @@ export function CarCard({ car }: CarCardProps) {
           </div>
         </div>
 
-        <p className="mt-2 overflow-hidden text-[12px] leading-5 text-[var(--color-muted)] [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2] sm:mt-3 sm:text-sm sm:leading-7">
+        <p className="mt-2 min-h-[3.75rem] overflow-hidden text-[12px] leading-5 text-[var(--color-muted)] [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:3] sm:mt-3 sm:min-h-[4.5rem] sm:text-sm sm:leading-7 sm:[-webkit-line-clamp:2]">
           {car.highlight}
         </p>
 
@@ -76,7 +76,7 @@ export function CarCard({ car }: CarCardProps) {
           </div>
         </div>
 
-        <div className="mt-3 grid grid-cols-2 gap-2 sm:mt-5 sm:gap-3">
+        <div className="mt-auto grid grid-cols-2 gap-2 pt-3 sm:pt-5 sm:gap-3">
           <Button
             href={`/avtomobiller/${car.slug}`}
             variant="secondary"
