@@ -31,16 +31,16 @@ export function BrandMark({ className, compact = false }: BrandMarkProps) {
         <div className="min-w-0">
           {compact ? (
             <>
-              <div className="truncate font-display text-[0.98rem] leading-none tracking-[-0.04em] text-[var(--color-text)] sm:text-[1.05rem]">
+              <div className="truncate font-display text-[0.96rem] leading-none tracking-[0.04em] text-[var(--color-text)] uppercase sm:text-[1.02rem]">
                 Brandium
               </div>
-              <div className="truncate text-[0.62rem] uppercase tracking-[0.24em] text-[var(--color-accent)] sm:text-[0.68rem]">
+              <div className="truncate text-[0.62rem] uppercase tracking-[0.28em] text-[var(--color-accent)] sm:text-[0.68rem]">
                 Rent a Car
               </div>
             </>
           ) : (
             <>
-              <div className="font-display text-[1.05rem] leading-none tracking-[-0.04em] text-[var(--color-text)] sm:text-[1.15rem]">
+              <div className="font-display text-[1.02rem] leading-none tracking-[0.04em] text-[var(--color-text)] uppercase sm:text-[1.12rem]">
                 Brandium
                 <span className="ml-1 text-[var(--color-accent)]">Rent a Car</span>
               </div>

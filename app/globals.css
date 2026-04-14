@@ -3,9 +3,9 @@
 
 :root {
   --font-sans:
-    "Aptos", "Segoe UI", "Segoe UI Variable Text", "Trebuchet MS", sans-serif;
+    "Avenir Next", "Segoe UI Variable Text", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --font-display:
-    "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+    "Avenir Next Condensed", "Bahnschrift SemiCondensed", "Arial Narrow", "Segoe UI Variable Display", "Helvetica Neue", Arial, sans-serif;
   --color-bg: #f7f1e7;
   --color-bg-soft: #efe4d4;
   --color-bg-deep: #f4ece0;
@@ -74,6 +74,10 @@ body {
     linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-soft) 42%, var(--color-bg-deep) 100%);
   color: var(--color-text);
   font-family: var(--font-sans);
+  font-weight: 500;
+  line-height: 1.55;
+  letter-spacing: -0.012em;
+  font-kerning: normal;
   overflow-x: clip;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -158,6 +162,20 @@ h5,
 h6,
 .font-display {
   font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  font-kerning: normal;
+  text-transform: none;
+}
+
+p,
+li,
+label,
+input,
+select,
+textarea,
+button {
+  letter-spacing: -0.01em;
 }
 
 a {
