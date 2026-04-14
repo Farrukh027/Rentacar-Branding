@@ -23,20 +23,13 @@ export function CarCard({ car }: CarCardProps) {
           imagePosition={car.mainImage.position}
           sizes="(max-width: 640px) 46vw, (max-width: 1280px) 30vw, 22vw"
           hideTextOnMobile
-          showMobileStatusDot
           className="aspect-[1/1] sm:aspect-[1.3/1]"
         />
-        <div className="absolute left-5 top-5 flex flex-wrap gap-1.5 sm:left-8 sm:top-8 sm:gap-2">
-          {car.topPick ? (
-            <span className="rounded-full border border-[var(--color-accent)]/25 bg-black/55 px-2 py-1 text-[9px] uppercase tracking-[0.22em] text-[var(--color-accent)] sm:px-3 sm:text-[10px]">
-              Top seçim
-            </span>
-          ) : null}
-          {car.popular ? (
-            <span className="rounded-full border border-white/10 bg-black/55 px-2 py-1 text-[9px] uppercase tracking-[0.22em] text-white sm:px-3 sm:text-[10px]">
-              Populyar
-            </span>
-          ) : null}
+        <div className="absolute left-5 top-5 sm:left-8 sm:top-8">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/55 px-2.5 py-1.5 text-[10px] font-medium tracking-[0.08em] text-white sm:px-3 sm:text-[11px]">
+            <span className="size-2.5 rounded-full bg-emerald-400 shadow-[0_0_0_3px_rgba(16,185,129,0.18)]" />
+            Aktiv
+          </span>
         </div>
       </div>
 
@@ -52,7 +45,7 @@ export function CarCard({ car }: CarCardProps) {
           </div>
           <div className="shrink-0 text-right">
             <div className="text-[9px] uppercase tracking-[0.18em] text-[var(--color-muted)] sm:text-[11px]">
-              Gündəlik
+              Gundelik
             </div>
             <div className="mt-1 text-[13px] font-semibold leading-5 text-[var(--color-text)] sm:text-lg">
               {car.pricing.daily}
