@@ -22,6 +22,8 @@ export function CarCard({ car }: CarCardProps) {
           imageAlt={car.mainImage.alt}
           imagePosition={car.mainImage.position}
           sizes="(max-width: 640px) 46vw, (max-width: 1280px) 30vw, 22vw"
+          hideTextOnMobile
+          showMobileStatusDot
           className="aspect-[1/1] sm:aspect-[1.3/1]"
         />
         <div className="absolute left-5 top-5 flex flex-wrap gap-1.5 sm:left-8 sm:top-8 sm:gap-2">
@@ -95,11 +97,11 @@ export function CarCard({ car }: CarCardProps) {
             href={buildWhatsAppLink(buildCarReservationMessage(car.name, "seçilən tarix", "seçilən tarix"))}
             size="sm"
             className="w-full justify-center"
-            icon="whatsapp"
+            icon="none"
             target="_blank"
             rel="noreferrer"
           >
-            Rezerv et
+            <span className="whitespace-nowrap">Rezerv et</span>
           </Button>
         </div>
       </div>

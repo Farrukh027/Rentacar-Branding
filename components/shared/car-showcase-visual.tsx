@@ -15,6 +15,8 @@ type CarShowcaseVisualProps = {
   imagePosition?: string;
   priority?: boolean;
   sizes?: string;
+  hideTextOnMobile?: boolean;
+  showMobileStatusDot?: boolean;
 };
 
 const shapes = {
@@ -38,7 +40,9 @@ export function CarShowcaseVisual({
   imageSrc,
   imagePosition = "center center",
   priority = false,
-  sizes = "(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+  sizes = "(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw",
+  hideTextOnMobile = false,
+  showMobileStatusDot = false
 }: CarShowcaseVisualProps) {
   const gradientId = `car-accent-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
   const isVectorImage = imageSrc?.endsWith(".svg") ?? false;
@@ -84,7 +88,17 @@ export function CarShowcaseVisual({
           style={{ backgroundColor: accent, opacity: 0.22 }}
         />
         <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/70 to-transparent" />
-        <div className="absolute inset-x-3 bottom-3 rounded-[18px] border border-white/10 bg-black/55 p-3 sm:inset-x-4 sm:bottom-4 sm:rounded-[22px] sm:bg-black/36 sm:p-4 lg:backdrop-blur-sm">
+        {showMobileStatusDot ? (
+          <div className="absolute left-3 top-3 z-10 sm:hidden">
+            <span className="block size-3 rounded-full border border-white/60 bg-emerald-400 shadow-[0_0_0_4px_rgba(10,10,12,0.28)]" />
+          </div>
+        ) : null}
+        <div
+          className={cn(
+            "absolute inset-x-3 bottom-3 rounded-[18px] border border-white/10 bg-black/55 p-3 sm:inset-x-4 sm:bottom-4 sm:rounded-[22px] sm:bg-black/36 sm:p-4 lg:backdrop-blur-sm",
+            hideTextOnMobile && "hidden sm:block"
+          )}
+        >
           {label ? (
             <div className="text-[10px] uppercase tracking-[0.22em] text-[var(--color-accent)] sm:text-[11px] sm:tracking-[0.28em]">
               {label}
